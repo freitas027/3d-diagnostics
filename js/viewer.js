@@ -22,7 +22,7 @@ controls.autoRotate = false;
 controls.screenSpacePanning = false;
 controls.minDistance = 1;
 controls.maxDistance = 500;
-controls.maxPolarAngle = Math.PI / 2;
+controls.maxPolarAngle = Math.PI;
 
 
 //Animation loop
@@ -46,6 +46,6 @@ $("document").ready(() => {
         loadScene('engine', scene, camera, controls);
     });
     $("#scene2").click(() => {
-        loadScene('disel-eng', scene, camera, controls);
+        loadScene('truck', scene, camera, controls);
     });
 });

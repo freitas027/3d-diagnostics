@@ -1,5 +1,7 @@
 import { GLTFLoader } from 'https://cdn.skypack.dev/three@0.128/examples/jsm/loaders/GLTFLoader.js';
-import { DRACOLoader} from 'https://cdn.skypack.dev/three@0.128/examples/jsm/loaders/DRACOLoader.js';
+
+
+// Move the canvas to a specific position
 export function panTo(camera, controls, position, rotation, target){
     camera.position.set(position.x,position.y,position.z);
     camera.rotation.set(rotation.x,rotation.y,rotation.z);
@@ -7,12 +9,8 @@ export function panTo(camera, controls, position, rotation, target){
     controls.target.set(target.x, target.y, target.z);
     controls.update();
 }
-const DRACOpath = "https://cdn.skypack.dev/three@0.128/examples/js/libs/draco/";
 
-export function addLight(){
-
-}
-
+// Add the lights
 export function setUp(scene, options){
     const ambLight = new THREE.AmbientLight(0xFFFFFF);
     scene.add(ambLight);
@@ -45,10 +43,11 @@ export function addSteps(cards, camera, controls){
         
         fullStepList += template;
     }
+    // Using jQuery to parse and add the elements
     let nodes = $.parseHTML(fullStepList);
     $("#stepHolder").empty();
     $("#stepHolder").append(nodes);
-    //stepHolder.innerHTML = fullStepList;
+
     // Adding Events
     $("#document").ready( () => {
         for (let i in cards){
@@ -57,6 +56,7 @@ export function addSteps(cards, camera, controls){
             console.log(position, rotation, target);
             let expanded = false;
             
+            // Use the closure variable expanded to determine if the card is being displayed or not
             $("#step"+i).on('click', () => {
                 expanded = !expanded;
                 if (expanded){
@@ -79,12 +79,9 @@ export async function loadScene(object, scene, camera, controls){
         $("#viewerMsg").text("Loading...");
     }
     manager.onLoad = function (){
-        $("#viewerMsg").text("Click and hold to rotate");
+        $("#viewerMsg").text("Click and hold to rotate. Scroll to zoom in/out.");
     }
     const loader = new GLTFLoader( manager );
-    const dracoLoader = new DRACOLoader();
-    dracoLoader.setDecoderPath(DRACOpath);
-    loader.setDRACOLoader( dracoLoader );
     const objectPath = `3d/${object}/scene.gltf`;
     const loaderPath = `../3d/${object}/load.js`
     const {options, cards} = await import(loaderPath);
