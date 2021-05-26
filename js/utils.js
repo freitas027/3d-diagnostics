@@ -38,7 +38,7 @@ export function addSteps(cards, camera, controls){
     </a>
     </div>
     <div class="collapse row ml-2 mr-2 mt-2" id="collapseStep${i}">
-        <div class="card card-body col-sm-12 m-2">
+        <div class="card card-body col-md-12 m-2">
             ${cards[i].description}
         </div>
     </div>`;
