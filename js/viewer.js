@@ -26,7 +26,7 @@ controls.maxPolarAngle = Math.PI / 2;
 
 
 // Loading 3d model
-loadScene('car2', scene, camera, controls);
+loadScene('engine', scene, camera, controls);
 
 //Animation loop
 function animate() {

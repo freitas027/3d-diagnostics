@@ -1,4 +1,5 @@
 import { GLTFLoader } from 'https://cdn.skypack.dev/three@0.128/examples/jsm/loaders/GLTFLoader.js';
+import { DRACOLoader} from 'https://cdn.skypack.dev/three@0.128/examples/jsm/loaders/DRACOLoader.js';
 export function panTo(camera, controls, position, rotation, target){
     camera.position.set(position.x,position.y,position.z);
     camera.rotation.set(rotation.x,rotation.y,rotation.z);
@@ -6,6 +7,7 @@ export function panTo(camera, controls, position, rotation, target){
     controls.target.set(target.x, target.y, target.z);
     controls.update();
 }
+const DRACOpath = "https://cdn.skypack.dev/three@0.128/examples/js/libs/draco/";
 
 export function addLight(){
 
@@ -59,11 +61,13 @@ export function addSteps(cards, camera, controls){
     
 }
 
-const loader = new GLTFLoader();
 
 
 export async function loadScene(object, scene, camera, controls){
-    
+    const loader = new GLTFLoader();
+    const dracoLoader = new DRACOLoader();
+    dracoLoader.setDecoderPath(DRACOpath);
+    loader.setDRACOLoader( dracoLoader );
     const objectPath = `3d/${object}/scene.gltf`;
     const loaderPath = `../3d/${object}/load.js`
     let {options, cards} = await import(loaderPath);
