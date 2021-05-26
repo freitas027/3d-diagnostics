@@ -46,6 +46,7 @@ export function addSteps(cards, camera, controls){
         fullStepList += template;
     }
     let nodes = $.parseHTML(fullStepList);
+    $("#stepHolder").empty();
     $("#stepHolder").append(nodes);
     //stepHolder.innerHTML = fullStepList;
     // Adding Events
@@ -54,8 +55,14 @@ export function addSteps(cards, camera, controls){
             const {cam: {position, rotation, target}} = cards[i];
             console.log(cards[i]);
             console.log(position, rotation, target);
-            $("#step"+i).on('click', () => console.log(camera.position, camera.rotation, controls.target));
-            $("#step"+i).on('click', () => panTo(camera, controls, position, rotation, target));
+            let expanded = false;
+            
+            $("#step"+i).on('click', () => {
+                expanded = !expanded;
+                if (expanded){
+                    panTo(camera, controls, position, rotation, target);
+                }
+            });
         }
     });
     
@@ -64,13 +71,23 @@ export function addSteps(cards, camera, controls){
 
 
 export async function loadScene(object, scene, camera, controls){
-    const loader = new GLTFLoader();
+    while(scene.children.length > 0){ 
+        scene.remove(scene.children[0]); 
+    }
+    const manager = new THREE.LoadingManager();
+    manager.onStart = function ( url, itemsLoaded, itemsTotal ){
+        $("#viewerMsg").text("Loading...");
+    }
+    manager.onLoad = function (){
+        $("#viewerMsg").text("Click and hold to rotate");
+    }
+    const loader = new GLTFLoader( manager );
     const dracoLoader = new DRACOLoader();
     dracoLoader.setDecoderPath(DRACOpath);
     loader.setDRACOLoader( dracoLoader );
     const objectPath = `3d/${object}/scene.gltf`;
     const loaderPath = `../3d/${object}/load.js`
-    let {options, cards} = await import(loaderPath);
+    const {options, cards} = await import(loaderPath);
     addSteps(cards, camera, controls);
     loader.load( objectPath, function ( gltf ) {
         gltf.scene.scale.set(...options.scale);
