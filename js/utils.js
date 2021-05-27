@@ -88,7 +88,7 @@ export async function loadScene(object, scene, camera, controls){
         }();
         console.log("@@@@",repeat123.next());
         intervalID = setInterval(() => {
-            $("#viewerMsg").text("Loading" + '.'.repeat(1));
+            $("#viewerMsg").text("Loading" + '.'.repeat(repeat123.next().value));
         }, 200);
             
 
