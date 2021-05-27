@@ -68,17 +68,32 @@ export function addSteps(cards, camera, controls){
     
 }
 
-
-
 export async function loadScene(object, scene, camera, controls){
+    // Clearing previous objects
     while(scene.children.length > 0){ 
         scene.remove(scene.children[0]); 
     }
+
+    // Create load manager to display progress
     const manager = new THREE.LoadingManager();
+
+    let intervalID;
     manager.onStart = function ( url, itemsLoaded, itemsTotal ){
-        $("#viewerMsg").text("Loading...");
+        let repeat123 = function* (){
+            while(true){
+                for (let val of [1, 2 ,3]){
+                    yield val;
+                }
+            }
+        }();
+        intervalID = setInterval(() => {
+            $("#viewerMsg").text("Loading" + '.'.repeat(repeat123.next()));
+        }, 300);
+            
+
     }
     manager.onLoad = function (){
+        clearInterval(intervalID);
         $("#viewerMsg").text("Click and hold to rotate. Scroll to zoom in/out.");
     }
     const loader = new GLTFLoader( manager );
