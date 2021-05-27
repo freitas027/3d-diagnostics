@@ -27,7 +27,7 @@ export const cards = {
             rotation: {x: -2.940388499380928, y: -0.6399994892037386, z: -3.020383477413137},
             target: {x: 5.4028058088121655, y: 8.520773443593763e-17, z: 4.558825536200583},
         },
-        description: "Check the state of the gears. Continue if they are not degraded.",
+        description: "Check if the connecting rods are broken.",
     },
     3: {
         title: "Check the screws",
